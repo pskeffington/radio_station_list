@@ -16,7 +16,7 @@ def validate(content: str) -> int:
     lines = content.splitlines()
     if len(content.encode("utf-8")) > MAX_BYTES:
         raise ValueError("catalog exceeds 256 KiB")
-    if len(lines) < 3 or lines[0] != VERSION or lines[1] != HEADER:
+    if len(lines) < 2 or lines[0] != VERSION or lines[1] != HEADER:
         raise ValueError("unsupported catalog version or TSV header")
 
     ids: set[str] = set()
