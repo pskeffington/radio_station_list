@@ -1,0 +1,29 @@
+name: Validate station catalog
+
+on:
+  push:
+    paths:
+      - "stations/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/catalog-validation.yml"
+  pull_request:
+    paths:
+      - "stations/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/catalog-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate station manifest
+        run: python3 scripts/validate_catalog.py stations/v1.tsv
+      - name: Run parser tests
+        run: python3 -m unittest discover -s tests -v
